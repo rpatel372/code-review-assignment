@@ -2,6 +2,8 @@ const express = require('express')
 const app = express()
 const port = process.env.PORT || 3000
 
+app.use(express.json()) 
+
 /* 
     Incase you are using mongodb atlas database uncomment below line
     and replace "mongoAtlasUri" with your mongodb atlas uri.
@@ -12,8 +14,8 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
-app.post('/incoming-pr',(request,response) => {
-    res.send(request.body);
+app.post('/incoming-pr',(req,res) => {
+    res.json({requestBody: req.body})
 });
 
 app.listen(port, () => {
