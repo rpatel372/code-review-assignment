@@ -5,15 +5,9 @@ var Slack = require('node-slack');
 
 app.use(express.json()) 
 
-/* 
-    Incase you are using mongodb atlas database uncomment below line
-    and replace "mongoAtlasUri" with your mongodb atlas uri.
-*/
-// mongoose.connect( mongoAtlasUri, {useNewUrlParser: true, useUnifiedTopology: true})
+var databaseService = require('./service/databaseService');
+
 function noop() {}
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
 
 app.post('/incoming-pr',(req,res) => {
     var prData = req.body.pullrequest;
@@ -25,6 +19,7 @@ app.post('/incoming-pr',(req,res) => {
         username: "Code Review Assignment",
         channel: "nothing-lol"
     };
+    databaseService.connectToDatabase();
     slack.send(params, noop);
     res.status(200).end();
     

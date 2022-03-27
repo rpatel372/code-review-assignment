@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "express": "^4.17.3",
-    "node-slack": "^0.0.7"
+    "node-slack": "^0.0.7",
+    "pg": "^8.7.3"
   }
 }
