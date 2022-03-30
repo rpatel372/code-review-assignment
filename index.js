@@ -25,6 +25,14 @@ app.post('/incoming-pr',(req,res) => {
     
 });
 
+app.post('/incoming-slack-event',(req,res) => {
+  var slackData = req.body;
+  console.log(slackData);
+  res.send({ challenge : slackData.challenge });
+  res.status(200).end();
+  
+});
+
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`)
 })
