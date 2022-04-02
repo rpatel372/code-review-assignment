@@ -9,7 +9,7 @@ var databaseService = require('./service/databaseService');
 
 function noop() {}
 
-app.post('/incoming-pr',(req,res) => {
+app.post('/incoming-pr', (req,res) => {
     var prData = req.body.pullrequest;
     var message = `<${prData.links.html.href}|${prData.author.display_name} has opened a PR titled ${prData.title} for review!>`;  
     var slack = new Slack('https://hooks.slack.com/services/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');
@@ -17,7 +17,7 @@ app.post('/incoming-pr',(req,res) => {
         attachments: [],
         text: message,
         username: "Code Review Assignment",
-        channel: "nothing-lol"
+        channel: "random"
     };
     databaseService.connectToDatabase();
     slack.send(params, noop);
@@ -28,7 +28,7 @@ app.post('/incoming-pr',(req,res) => {
 app.post('/incoming-slack-event',(req,res) => {
   var slackData = req.body;
   console.log(slackData);
-  res.send({ challenge : slackData.challenge });
+  res.send({ slackData : slackData });
   res.status(200).end();
   
 });

@@ -1,0 +1,15 @@
+NEED TO ADD A SLACK COMMAND:
+/start [round-robin] [point-assignment] 
+/add-reviewer [tag users]
+/add-repo [list of repos]
+https://anvil.works/learn/tutorials/build-a-slack-bot
+^^^ BITBUCKET WEBHOOK CALL TO API SHOULD LOOK UP WHICH REPO IS ASSIGNED TO WHICH CHANNEL
+
+ROUND ROBIN:
+- Create member list every time bot is added
+- Pull assignment list & get reviewers
+- Get next # of reviewers
+
+When person added, remove from table
+When person removed, add to table
+[LATER] /addmember /removemember
