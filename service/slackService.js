@@ -4,6 +4,8 @@ var Slack = require('node-slack');
 
 module.exports = (function () {
 
+function noop() {}
+
 var setupRotation  = function (channelId, rotationType, webhookUrl) {
     var rotation = rotationType.trim();
     if (available_rotation_types.includes(rotation)) {
