@@ -1,6 +1,7 @@
 var available_rotation_types = ["round-robin", "point-ranking"]
 
 var Slack = require('node-slack');
+var databaseService = require('./databaseService');
 
 module.exports = (function () {
 
@@ -10,6 +11,8 @@ var setupRotation  = function (channelId, rotationType, webhookUrl) {
     var rotation = rotationType.trim();
     if (available_rotation_types.includes(rotation)) {
         // TODO: add to db
+        databaseService.insertRotationType(channelId, rotationType);
+        sendMessage(webhookUrl, channelId, "Setup has succeeded! Now you must add your repositories and members to the rotation.")
     } else {
         sendMessage(webhookUrl, channelId, "This is an invalid rotation type! Please select round-robin or point-ranking")
     }

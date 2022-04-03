@@ -24,7 +24,6 @@ app.post('/incoming-pr', (req,res) => {
         username: "Code Review Assignment",
         channel: "random"
     };
-    databaseService.connectToDatabase();
     slack.send(params, noop);
     res.status(200).end();
     

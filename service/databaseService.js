@@ -9,20 +9,20 @@ module.exports = (function () {
         }
     });
 
-    var connectToDatabase = function () {
+    var insertRotationType = function (slackChannelId, rotationType) {
         client.connect();
-
-        client.query('SELECT table_schema,table_name FROM information_schema.tables;', (err, res) => {
-        if (err) throw err;
-        for (let row of res.rows) {
-            console.log(JSON.stringify(row));
+        client.query(
+        `INSERT INTO channels(channel, rotation_type) VALUES('${slackChannelId}', '${rotationType}')`,
+        (err, res) => {
+            console.log(err, res);
+            client.end();
         }
-        client.end();
-        });
+        );
+        
     };
 
     return {
-        connectToDatabase: connectToDatabase
+        insertRotationType: insertRotationType
     };
 
 
