@@ -1,0 +1,9 @@
+Slack Bot Assignment
+
+Steps to Install:
+1. Serve application
+2. Deploy database and set connection string in env
+3. Set up Slack application
+* Create a new application
+* Setup slash commands
+* Add webhook url

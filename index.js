@@ -6,6 +6,7 @@ var Slack = require('node-slack');
 app.use(express.json()) 
 
 var databaseService = require('./service/databaseService');
+var slackService = require ('./service/slackService');
 
 function noop() {}
 
@@ -25,13 +26,25 @@ app.post('/incoming-pr', (req,res) => {
     
 });
 
-app.post('/incoming-slack-event',(req,res) => {
+app.post('/incoming-slack-event', (req, res) => {
   var slackData = req.body;
   console.log(slackData);
   res.send({ slackData : slackData });
   res.status(200).end();
+});
+
+app.post('/incoming-slack-event/setup', (req, res) => {
+  var slackData = req.body;
+  slackService.setupRotation(slackData.channel_id, slackData.text, slackData.response_url)
+  res.status(200).end();
+});
+
+
+app.post('/incoming-slack-event/add-repo', (req,res) => {
+  res.status(200).end();
   
 });
+
 
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`)
