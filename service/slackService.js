@@ -5,7 +5,7 @@ var Slack = require('node-slack');
 module.exports = (function () {
 
 var setupRotation  = function (channelId, rotationType, webhookUrl) {
-    var rotation = rotation.trim();
+    var rotation = rotationType.trim();
     if (available_rotation_types.includes(rotation)) {
         // TODO: add to db
     } else {
@@ -29,7 +29,6 @@ var sendMessage = function(webhookUrl, channelId, message) {
         username: "Code Review Assignment",
         channel: channelId
     };
-    databaseService.connectToDatabase();
     slack.send(params, noop);
 }
 
