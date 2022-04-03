@@ -35,6 +35,7 @@ app.post('/incoming-slack-event', (req, res) => {
 
 app.post('/incoming-slack-event/setup', (req, res) => {
   var slackData = req.body;
+  console.log(slackData);
   slackService.setupRotation(slackData.channel_id, slackData.text, slackData.response_url)
   res.status(200).end();
 });
