@@ -9,7 +9,6 @@ const port = process.env.PORT || 3000
 app.use(bodyParser.json({}));
 app.use(bodyParser.urlencoded({ extended: false }));
 
-var databaseService = require('./service/databaseService');
 var slackService = require ('./service/slackService');
 
 function noop() {}
@@ -45,8 +44,10 @@ app.post('/incoming-slack-event/setup', (req, res) => {
 
 
 app.post('/incoming-slack-event/add-repo', (req,res) => {
+  var slackData = req.body;
+  console.log(slackData);
+  slackService.addRepositoryToTeam(slackData.channel_id, slackData.text, slackData.response_url)
   res.status(200).end();
-  
 });
 
 

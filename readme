@@ -7,3 +7,12 @@ Steps to Install:
 * Create a new application
 * Setup slash commands
 * Add webhook url
+4. Set up database
+* Run upscript to set up tables
+* Add database connection string to env config
+
+
+How to Use:
+* /setup
+* /add-member
+* /add-repository
