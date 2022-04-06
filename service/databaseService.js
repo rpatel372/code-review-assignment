@@ -10,14 +10,17 @@ const pool = new Pool({
 module.exports = (function () {
 
     var insertRotationType = function (slackChannelId, rotationType) {
-        pool.connect(function(err, client, done) {
-            client.query(
-            `INSERT INTO channels(channel, rotation_type) VALUES('${slackChannelId}', '${rotationType}')`,
-                (err, res) => {
-                    done();
-                }
-            );
-        });
+        pool.connect()
+        .then(client => {
+            return client.query(`INSERT INTO channels(channel, rotation_type) VALUES('${slackChannelId}', '${rotationType}')`)
+                .then(res => {
+                    client.release();
+                })
+                .catch(e => {
+                    client.release()
+                    console.log(e.stack); 
+                })
+            });
     };
 
     var getChannelId = async function (slackChannel) {
