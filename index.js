@@ -50,6 +50,13 @@ app.post('/incoming-slack-event/add-repo', (req,res) => {
   slackService.addRepositoryToTeam(slackData.channel_id, slackData.text, slackData.response_url)
 });
 
+app.post('/incoming-slack-event/add-member', (req,res) => {
+  res.status(200).end();
+  var slackData = req.body;
+  console.log(slackData);
+  slackService.addUserToRotation(slackData.channel_id, slackData.text, slackData.response_url)
+});
+
 
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`)

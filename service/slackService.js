@@ -32,7 +32,7 @@ var addRepositoryToTeam = async function(channel, repoNames, webhookUrl) {
     }
 }
 
-var addUserToRotation = function(channelId, user) {
+var addUserToRotation = function(channelId, users, webhookUrl) {
 
 }
 
@@ -49,7 +49,8 @@ var sendMessage = function(webhookUrl, channelId, message) {
 
 return {
     setupRotation: setupRotation,
-    addRepositoryToTeam: addRepositoryToTeam
+    addRepositoryToTeam: addRepositoryToTeam,
+    addUserToRotation: addUserToRotation
 };
 
 })();
