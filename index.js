@@ -16,14 +16,7 @@ function noop() {}
 app.post('/incoming-pr', (req,res) => {
     var prData = req.body.pullrequest;
     var message = `<${prData.links.html.href}|${prData.author.display_name} has opened a PR titled ${prData.title} for review!>`;  
-    var slack = new Slack('https://hooks.slack.com/services/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');
-    var params = {
-        attachments: [],
-        text: message,
-        username: "Code Review Assignment",
-        channel: "random"
-    };
-    slack.send(params, noop);
+    
     res.status(200).end();
     
 });

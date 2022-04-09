@@ -30,7 +30,6 @@ module.exports = (function () {
             );
             
             if (res.rows.length > 0) {
-                console.log(res.rows[0]);
                 return res.rows[0]["channel_id"];
             }
             return null;
@@ -54,10 +53,30 @@ module.exports = (function () {
             });
     };
 
+    var insertUser = function (channelId, user) {
+        var nextRotationOrder = 1;
+        pool.connect()
+        .then(client => {
+            return client.query(`SELECT user_order FROM members WHERE channel_id = '${channelId}'`)
+                .then(res => {
+                    if (res.rows.length > 0) {
+                        nextRotationOrder = parseInt(res.rows[0]["user_order"]) + 1;
+                    }
+                    client.query(`INSERT INTO members(channel_id, user_id, user_order) VALUES('${channelId}', '${user}', '${nextRotationOrder}')`)
+                    client.release();
+                })
+                .catch(e => {
+                    client.release()
+                    console.log(e.stack); 
+                })
+            });
+    };
+
     return {
         insertRotationType: insertRotationType,
         getChannelId: getChannelId,
-        insertRepo: insertRepo
+        insertRepo: insertRepo,
+        insertUser: insertUser
     };
 
 

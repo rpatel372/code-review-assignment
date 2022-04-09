@@ -50,8 +50,10 @@ var addUserToRotation = async function(channel, users, webhookUrl) {
             } catch {
                 unsuccessful.push(user);
             }
-            
-            // databaseService.insertRepo(channelId, repo);
+        }
+
+        for (var successfulUser of successful) {
+            databaseService.insertUser(channelId, successfulUser);
         }
 
         var successUsersStr = "";
@@ -66,9 +68,7 @@ var addUserToRotation = async function(channel, users, webhookUrl) {
         if (unsuccessful.length > 0) {
             messageStr += ` Users(s)${unsuccessUsersStr} were invalid users and were not added!`;
         }
-        console.log(successUsersStr);
-        console.log(unsuccessUsersStr);
-        console.log(messageStr);
+
         sendMessage(webhookUrl, channel, messageStr);
     }
 }
