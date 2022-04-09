@@ -20,7 +20,6 @@ var setupRotation  = function (channel, rotationType, webhookUrl) {
 
 var addRepositoryToTeam = async function(channel, repoNames, webhookUrl) {
     var channelId = await databaseService.getChannelId(channel);
-    console.log("test 1: " + channelId);
     if (channelId == null) {
         sendMessage(webhookUrl, channel, "This Slack channel needs to be setup first! Please use the setup command to begin.");
     } else {
@@ -32,11 +31,30 @@ var addRepositoryToTeam = async function(channel, repoNames, webhookUrl) {
     }
 }
 
-var addUserToRotation = function(channelId, users, webhookUrl) {
-
+var addUserToRotation = async function(channel, users, webhookUrl) {
+    var channelId = await databaseService.getChannelId(channel);
+    if (channelId == null) {
+        sendMessage(webhookUrl, channel, "This Slack channel needs to be setup first! Please use the setup command to begin.");
+    } else {
+        var userIds = users.split(" ");
+        var successful = [];
+        var unsuccessful = [];
+        for (var user of userIds) {
+            try {
+                var parsedUser = user.split("|")[0].substring(2);
+                successful.push(parsedUser);
+            } catch {
+                unsuccessful.push(user);
+            }
+            
+            // databaseService.insertRepo(channelId, repo);
+        }
+        console.log(successful);
+        sendMessage(webhookUrl, channel, `User <@${successful[0]}> has been added!`);
+    }
 }
 
-var sendMessage = function(webhookUrl, channelId, message) {
+var sendMessage = async function(webhookUrl, channelId, message) {
     var slack = new Slack(webhookUrl);
     var params = {
         attachments: [],
