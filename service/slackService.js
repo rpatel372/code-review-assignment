@@ -10,7 +10,6 @@ function noop() {}
 var setupRotation  = function (channel, rotationType, webhookUrl) {
     var rotation = rotationType.trim();
     if (available_rotation_types.includes(rotation)) {
-        // TODO: add to db
         databaseService.insertRotationType(channel, rotationType);
         sendMessage(webhookUrl, channel, "Setup has succeeded! Now you must add your repositories and members to the rotation.");
     } else {

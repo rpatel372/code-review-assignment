@@ -15,6 +15,11 @@ function noop() {}
 
 app.post('/incoming-pr', (req,res) => {
     var prData = req.body.pullrequest;
+    // TODO: get team
+    getTeam();
+    // TODO: pull next two members from rotation and add them to the database
+
+    // TODO: tag them and send message to channel
     var message = `<${prData.links.html.href}|${prData.author.display_name} has opened a PR titled ${prData.title} for review!>`;  
     
     res.status(200).end();
