@@ -4,4 +4,4 @@ CREATE TABLE repos ( repo_id serial PRIMARY KEY, channel_id INT NOT NULL, repo V
 
 CREATE TABLE members ( member_id serial PRIMARY KEY, channel_id INT NOT NULL, user_id VARCHAR(255) NOT NULL, user_order INT NOT NULL );
 
-CREATE TABLE reviews ( assignment_id, channel_id, member_id )
+CREATE TABLE reviews ( assignment_id serial PRIMARY KEY, channel_id INT NOT NULL, member_id INT NOT NULL );

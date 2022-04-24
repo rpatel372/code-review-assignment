@@ -37,7 +37,7 @@ module.exports = (function () {
             console.log(err);
             return null;
         }
-    }
+    };
 
     var insertRepo = function (channelId, repo) {
         pool.connect()
@@ -72,11 +72,45 @@ module.exports = (function () {
             });
     };
 
+    var getTeamByRepository = async function (repoName) {
+        try {
+            const res = await pool.query(
+                `SELECT channel_id FROM repos WHERE repo = '${repoName}'`
+            );
+            
+            if (res.rows.length > 0) {
+                return res.rows[0]["channel_id"];
+            }
+            return null;
+        } catch (err) {
+            console.log(err);
+            return null;
+        }
+    };
+
+    var getLastAssigned = async function (channelId) {
+        try {
+            const res = await pool.query(
+                `SELECT member_id FROM reviews WHERE channel_id = '${channelId} ORDER BY assignment_id LIMIT 1;'`
+            );
+            
+            if (res.rows.length > 0) {
+                return res.rows[0]["member_id"];
+            }
+            return null;
+        } catch (err) {
+            console.log(err);
+            return null;
+        }
+    };
+
     return {
         insertRotationType: insertRotationType,
         getChannelId: getChannelId,
         insertRepo: insertRepo,
-        insertUser: insertUser
+        insertUser: insertUser,
+        getTeamByRepository: getTeamByRepository,
+        getLastAssigned: getLastAssigned
     };
 
 

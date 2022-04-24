@@ -9,18 +9,15 @@ const port = process.env.PORT || 3000
 app.use(bodyParser.json({}));
 app.use(bodyParser.urlencoded({ extended: false }));
 
-var slackService = require ('./service/slackService');
+var slackService = require('./service/slackService');
+var pullRequestAssignment = require('./helpers/pullRequestAssignment');
 
 function noop() {}
 
-app.post('/incoming-pr', (req,res) => {
+app.post('/incoming-pr', (req, res) => {
     var prData = req.body.pullrequest;
     // TODO: get team
-    getTeam();
-    // TODO: pull next two members from rotation and add them to the database
-
-    // TODO: tag them and send message to channel
-    var message = `<${prData.links.html.href}|${prData.author.display_name} has opened a PR titled ${prData.title} for review!>`;  
+    pullRequestAssignment.assignPullRequest(prData);
     
     res.status(200).end();
     
